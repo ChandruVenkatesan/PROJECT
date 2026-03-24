@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}{{ doc.original_name }}{% endblock %}
+{% block content %}
+<div class="page-hdr">
+  <div>
+    <h1>{{ doc.original_name }}</h1>
+    <p class="sub">{{ doc.file_type|upper }} · {{ (doc.file_size/1024)|round(1) }} KB · Uploaded {{ doc.upload_date[:10] }}</p>
+  </div>
+  <div class="hdr-acts">
+    <a href="/documents/download/{{ doc.id }}" class="btn btn-outline">⬇ Download</a>
+    <a href="/documents/dashboard"             class="btn btn-ghost">← Back</a>
+  </div>
+</div>
+
+<div class="detail-grid">
+  <!-- Metadata editor -->
+  <div class="card">
+    <h3 class="card-title">Metadata</h3>
+    <form action="/metadata/update/{{ doc.id }}" method="POST" class="auth-form">
+      <div class="field">
+        <label>Title</label>
+        <input type="text" name="title"
+               value="{{ meta.title if meta and meta.title else doc.original_name }}">
+      </div>
+      <div class="field">
+        <label>Author</label>
+        <input type="text" name="author"
+               value="{{ meta.author if meta and meta.author else '' }}"
+               placeholder="Author name">
+      </div>
+      <div class="field">
+        <label>Tags <small>(comma-separated)</small></label>
+        <input type="text" name="tags"
+               value="{{ meta.tags if meta and meta.tags else '' }}"
+               placeholder="report, finance, 2024">
+      </div>
+      <div class="field">
+        <label>Description</label>
+        <textarea name="description" rows="3"
+                  placeholder="Brief description…">{{ meta.description if meta and meta.description else '' }}</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Save Metadata</button>
+    </form>
+  </div>
+
+  <!-- Index stats + keywords -->
+  <div class="card">
+    <h3 class="card-title">Index Statistics</h3>
+    <div class="mini-stats">
+      <div class="mini-stat">
+        <div class="stat-n">{{ stats.term_count }}</div>
+        <div class="stat-l">Unique Terms</div>
+      </div>
+      <div class="mini-stat">
+        <div class="stat-n">{{ stats.total_words }}</div>
+        <div class="stat-l">Total Words</div>
+      </div>
+    </div>
+
+    <h4 style="margin:1.25rem 0 0.6rem">Top Keywords</h4>
+    <div class="kw-cloud">
+      {% for kw in keywords %}
+      <a href="/search/?q={{ kw.keyword }}" class="kw-pill"
+         style="font-size:{{ [0.74 + kw.frequency*0.05, 1.15]|min }}rem">
+        {{ kw.keyword }}<sup>{{ kw.frequency }}</sup>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- Extracted text -->
+<div class="card mt">
+  <h3 class="card-title">Extracted Text</h3>
+  <div class="ext-text">{{ doc.extracted_text or 'No text extracted.' }}</div>
+</div>
+
+<!-- Danger zone -->
+<div class="danger-zone mt">
+  <h4>Danger Zone</h4>
+  <form action="/documents/delete/{{ doc.id }}" method="POST"
+        onsubmit="return confirm('Permanently delete this document?')">
+    <button class="btn btn-danger">Delete Document</button>
+  </form>
+</div>
+{% endblock %}

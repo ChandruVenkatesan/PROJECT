@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+<div class="page-hdr">
+  <div><h1>Search Documents</h1><p class="sub">Full-text search across all indexed content</p></div>
+</div>
+
+<!-- Search bar -->
+<div class="srch-wrap">
+  <form action="/search/" method="GET">
+    <div class="srch-bar">
+      <span class="srch-icon">⌕</span>
+      <input type="text" name="q" value="{{ query }}"
+             placeholder="Enter keywords…" class="srch-input" autofocus>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+    <div class="srch-filters">
+      <select name="type" class="filter-sel">
+        <option value="all"  {% if filter_type=='all'  %}selected{% endif %}>All Types</option>
+        <option value="pdf"  {% if filter_type=='pdf'  %}selected{% endif %}>PDF</option>
+        <option value="docx" {% if filter_type=='docx' %}selected{% endif %}>DOCX</option>
+        <option value="txt"  {% if filter_type=='txt'  %}selected{% endif %}>TXT</option>
+        <option value="png"  {% if filter_type=='png'  %}selected{% endif %}>PNG</option>
+        <option value="jpg"  {% if filter_type=='jpg'  %}selected{% endif %}>JPG</option>
+      </select>
+      <select name="sort" class="filter-sel">
+        <option value="relevance" {% if sort_by=='relevance' %}selected{% endif %}>Relevance</option>
+        <option value="date"      {% if sort_by=='date'      %}selected{% endif %}>Date</option>
+        <option value="name"      {% if sort_by=='name'      %}selected{% endif %}>Name</option>
+      </select>
+    </div>
+  </form>
+</div>
+
+{% if query %}
+  <p class="results-count">
+    {% if total %}<strong>{{ total }}</strong> result{{ 's' if total!=1 }} for <em>"{{ query }}"</em>
+    {% else %}No results for <em>"{{ query }}"</em>{% endif %}
+  </p>
+
+  {% if results %}
+  <div class="results">
+    {% for r in results %}
+    <div class="result-card">
+      <div class="result-top">
+        <div class="result-name">
+          <span class="ftype ftype--{{ r.file_type }}">{{ r.file_type|upper }}</span>
+          <a href="/documents/view/{{ r.id }}">{{ r.original_name }}</a>
+        </div>
+        <div class="result-meta">
+          <span>{{ r.upload_date[:10] }}</span>
+          <span>{{ (r.file_size/1024)|round(1) }} KB</span>
+          {% if r.tags %}{% for t in r.tags.split(',') %}<span class="tag">{{ t.strip() }}</span>{% endfor %}{% endif %}
+        </div>
+      </div>
+      <div class="snippet">{{ r.snippet|safe }}</div>
+      <div class="result-acts">
+        <a href="/documents/view/{{ r.id }}"     class="btn btn-sm btn-outline">View</a>
+        <a href="/documents/download/{{ r.id }}" class="btn btn-sm btn-ghost">Download</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty">
+    <div class="empty-icon">🔍</div>
+    <h3>No matches found</h3>
+    <p>Try different keywords or broaden your filter.</p>
+  </div>
+  {% endif %}
+
+{% else %}
+<div class="srch-landing">
+  <div class="srch-landing-icon">⌕</div>
+  <h3>Start searching</h3>
+  <p>Type any keyword to search across all your documents,<br>including text extracted from scanned images.</p>
+</div>
+{% endif %}
+{% endblock %}

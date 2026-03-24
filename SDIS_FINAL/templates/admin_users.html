@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Manage Users{% endblock %}
+{% block content %}
+<div class="page-hdr">
+  <div><h1>User Management</h1><p class="sub">{{ users|length }} registered users</p></div>
+  <a href="/admin/dashboard" class="btn btn-outline">← Admin</a>
+</div>
+
+<div class="tbl-wrap">
+  <table class="tbl">
+    <thead>
+      <tr><th>Username</th><th>Email</th><th>Role</th><th>Docs</th>
+          <th>Joined</th><th>Status</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      {% for u in users %}
+      <tr class="{{ 'row-inactive' if not u.is_active }}">
+        <td><strong>{{ u.username }}</strong></td>
+        <td>{{ u.email }}</td>
+        <td><span class="role-badge role-{{ u.role }}">{{ u.role }}</span></td>
+        <td>{{ u.doc_count }}</td>
+        <td>{{ u.created_at[:10] }}</td>
+        <td>
+          <span class="dot {{ 'dot-green' if u.is_active else 'dot-red' }}">
+            {{ 'Active' if u.is_active else 'Inactive' }}
+          </span>
+        </td>
+        <td class="acts">
+          <form action="/admin/users/toggle/{{ u.id }}" method="POST" style="display:inline">
+            <button class="act act-view" title="{{ 'Deactivate' if u.is_active else 'Activate' }}">
+              {{ '⏸' if u.is_active else '▶' }}
+            </button>
+          </form>
+          {% if u.id != session.user_id %}
+          <form action="/admin/users/delete/{{ u.id }}" method="POST" style="display:inline"
+                onsubmit="return confirm('Delete user {{ u.username }}?')">
+            <button class="act act-del" title="Delete">✕</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
