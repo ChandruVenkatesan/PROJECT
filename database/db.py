@@ -19,11 +19,11 @@ except ImportError:
 
 # ── DB config from environment variables ─────────────────
 DB_CONFIG = {
-    "host":     os.environ.get("MYSQL_HOST",     "localhost"),
-    "port":     int(os.environ.get("MYSQL_PORT", 3306)),
-    "user":     os.environ.get("MYSQL_USER",     "sdis_user"),
-    "password": os.environ.get("MYSQL_PASSWORD", "sdis_password"),
-    "database": os.environ.get("MYSQL_DATABASE", "sdis_db"),
+    "host":     os.environ.get("MYSQLHOST",     "localhost"),
+    "port":     int(os.environ.get("MYSQLPORT", 3306)),
+    "user":     os.environ.get("MYSQLUSER",     "root"),
+    "password": os.environ.get("MYSQLPASSWORD", ""),
+    "database": os.environ.get("MYSQLDATABASE", "railway"),
     "charset":  "utf8mb4",
     "collation":"utf8mb4_unicode_ci",
     "autocommit": False,
