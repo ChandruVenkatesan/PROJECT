@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+<div class="landing">
+  <div class="hero">
+    <span class="hero-badge">◈ SDIS v1.0</span>
+    <h1 class="hero-title">Smart Document<br><span class="accent">Indexing System</span></h1>
+    <p class="hero-sub">Upload any document. Extract its text. Search it instantly.<br>OCR-powered · Keyword-indexed · Role-secured.</p>
+    <div class="hero-cta">
+      <a href="/auth/login"    class="btn btn-primary">Login</a>
+      <a href="/auth/register" class="btn btn-outline">Register</a>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feat-card">
+      <div class="feat-icon">⬆</div>
+      <h3>Multi-format Upload</h3>
+      <p>PDF, DOCX, TXT, PNG, JPG — batch upload supported.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">◎</div>
+      <h3>OCR Extraction</h3>
+      <p>Tesseract converts scanned images to searchable text automatically.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">⌕</div>
+      <h3>FTS5 Search</h3>
+      <p>BM25-ranked full-text search with highlighted keyword snippets.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">⚿</div>
+      <h3>Access Control</h3>
+      <p>Admin & User roles with SHA-256 passwords and audit logging.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-head">
+      <div class="auth-logo">◈</div>
+      <h2>Welcome back</h2>
+      <p>Sign in to your SDIS account</p>
+    </div>
+    <form action="/auth/login" method="POST" class="auth-form">
+      <div class="field">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Enter username" required autofocus>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter password" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-full">Sign In</button>
+    </form>
+    <p class="auth-foot">No account? <a href="/auth/register">Register</a></p>
+    <div class="auth-hint">Default admin → <code>admin</code> / <code>Admin@123</code></div>
+  </div>
+</div>
+{% endblock %}

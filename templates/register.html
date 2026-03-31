@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-head">
+      <div class="auth-logo">◈</div>
+      <h2>Create Account</h2>
+      <p>Join SDIS to manage your documents</p>
+    </div>
+    <form action="/auth/register" method="POST" class="auth-form">
+      <div class="field">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Choose a username" required>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="you@email.com" required>
+      </div>
+      <div class="field">
+        <label>Password <small>(8+ chars, 1 uppercase, 1 digit)</small></label>
+        <input type="password" name="password" placeholder="Strong password" required>
+      </div>
+      <div class="field">
+        <label>Confirm Password</label>
+        <input type="password" name="confirm_password" placeholder="Repeat password" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-full">Create Account</button>
+    </form>
+    <p class="auth-foot">Already have an account? <a href="/auth/login">Login</a></p>
+  </div>
+</div>
+{% endblock %}
