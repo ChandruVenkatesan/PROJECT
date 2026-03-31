@@ -54,5 +54,5 @@ if __name__ == "__main__":
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
     init_db()
     print("\n  ◈  SDIS (MySQL) →  http://localhost:5000")
-    print("     Admin login  →  admin / Admin@123\n")
+    print("     Admin login  →  Chandru / Chandru@2005\n")
     app.run(debug=True, port=5000)

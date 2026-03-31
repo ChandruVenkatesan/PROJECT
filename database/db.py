@@ -140,11 +140,11 @@ def init_db():
             cur.execute(sql)
 
     # Seed default admin: admin / Admin@123
-    admin_pw = hashlib.sha256("Admin@123".encode()).hexdigest()
+    admin_pw = hashlib.sha256("Chandru@2005".encode()).hexdigest()
     cur.execute("""
         INSERT IGNORE INTO users (username, email, password, role)
         VALUES (%s, %s, %s, 'admin')
-    """, ("admin", "admin@sdis.com", admin_pw))
+    """, ("Chandru", "chandru@sdis.com", admin_pw))
 
     conn.commit()
     cur.close()
