@@ -12,7 +12,7 @@
   --bg:        #ffffff;
   --card:      #f8f9fa;
   --hover:     #eef1f5;
-  --border:    #e2e8f0;
+  --border:    #ffffff;
   --border2:   #cbd5e1;
   --accent:    #5b9cf6;
   --accent-d:  #3a6abf;
@@ -36,11 +36,6 @@
   --txt2:      #8b95a8;
   --txt3:      #50596a;
 }
-.light{
-  border-radius: 100%;
-  border-style: none;
-}
-
 /* Smooth transition */
 body {
   transition: background 0.3s ease, color 0.3s ease;
