@@ -25,6 +25,9 @@
       {% endif %}
     </div>
     <div class="nav-right">
+      <button onclick="toggleTheme()" class="btn-theme">
+  🌙
+</button>
       <a href="/auth/profile" class="user-chip">
         <span class="user-avatar">{{ session.username[0]|upper }}</span>
         <span class="user-name">{{ session.username }}</span>

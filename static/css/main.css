@@ -5,27 +5,48 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
 
-/* ── Variables ─────────────────────────────── */
+/* ── Theme Variables ───────────────────────── */
+
+/* 🌞 LIGHT THEME (DEFAULT) */
 :root {
+  --bg:        #ffffff;
+  --card:      #f8f9fa;
+  --hover:     #eef1f5;
+  --border:    #e2e8f0;
+  --border2:   #cbd5e1;
+  --accent:    #5b9cf6;
+  --accent-d:  #3a6abf;
+  --accent-bg: rgba(91,156,246,.1);
+  --green:     #16a34a;
+  --red:       #dc2626;
+  --yellow:    #ca8a04;
+  --txt:       #111827;
+  --txt2:      #4b5563;
+  --txt3:      #9ca3af;
+}
+
+/* 🌙 DARK THEME */
+.dark-theme {
   --bg:        #0c0e14;
   --card:      #13161f;
   --hover:     #1a1e2a;
   --border:    #21263a;
   --border2:   #2b3150;
-  --accent:    #5b9cf6;
-  --accent-d:  #3a6abf;
-  --accent-bg: rgba(91,156,246,.12);
-  --green:     #4ade80;
-  --red:       #f87171;
-  --yellow:    #fbbf24;
   --txt:       #e2e8f0;
   --txt2:      #8b95a8;
   --txt3:      #50596a;
-  --mono:      'Space Mono', monospace;
-  --sans:      'DM Sans', sans-serif;
-  --r:         8px;
-  --r2:        14px;
-  --t:         .18s ease;
+}
+
+/* Smooth transition */
+body {
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Light Theme (default) */
+
+.dark-theme .card {
+    background-color: #1e1e1e;
+    color: #fff;
 }
 
 /* ── Reset ─────────────────────────────────── */
