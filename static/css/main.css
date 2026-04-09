@@ -36,6 +36,10 @@
   --txt2:      #8b95a8;
   --txt3:      #50596a;
 }
+.light{
+  border-radius: 100%;
+  border-style: none;
+}
 
 /* Smooth transition */
 body {
