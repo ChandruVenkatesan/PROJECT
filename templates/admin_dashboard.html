@@ -36,7 +36,7 @@
     {% for s in file_type_stats %}
     <div class="type-row">
       <span class="ftype ftype--{{ s.file_type }}">{{ s.file_type|upper }}</span>
-      <div class="bar-wrap"><div class="bar" style="width:{{ [s.cnt*15,100]|min }}%"></div></div>
+      <div class="bar-wrap"><div class="bar"></div></div>
       <span>{{ s.cnt }}</span>
     </div>
     {% endfor %}
