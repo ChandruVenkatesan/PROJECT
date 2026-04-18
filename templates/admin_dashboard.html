@@ -31,15 +31,35 @@
     </div>
   </div>
 
+  <!-- ── Documents by Type — fixed proportional bars ── -->
   <div class="card">
     <h3 class="card-title">Documents by Type</h3>
-    {% for s in file_type_stats %}
-    <div class="type-row">
-      <span class="ftype ftype--{{ s.file_type }}">{{ s.file_type|upper }}</span>
-      <div class="bar-wrap"><div class="bar"></div></div>
-      <span>{{ s.cnt }}</span>
-    </div>
-    {% endfor %}
+
+    {% if file_type_stats %}
+      {# Find the maximum count so bars scale relative to the largest #}
+      {% set max_cnt = namespace(val=1) %}
+      {% for s in file_type_stats %}
+        {% if s.cnt > max_cnt.val %}{% set max_cnt.val = s.cnt %}{% endif %}
+      {% endfor %}
+
+      <div class="type-chart">
+        {% for s in file_type_stats %}
+        {# Calculate width as percentage of the max value, min 4% so bar is always visible #}
+        {% set pct = ((s.cnt / max_cnt.val) * 100) | round(1) %}
+        {% set pct = [pct, 4] | max %}
+        <div class="type-row">
+          <span class="ftype ftype--{{ s.file_type }}">{{ s.file_type | upper }}</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: {{ pct }}%"></div>
+          </div>
+          <span class="bar-count">{{ s.cnt }}</span>
+        </div>
+        {% endfor %}
+      </div>
+
+    {% else %}
+      <p class="muted" style="font-size:.85rem;padding:.5rem 0">No documents uploaded yet.</p>
+    {% endif %}
   </div>
 </div>
 
@@ -59,4 +79,64 @@
     </tbody>
   </table>
 </div>
+
+<style>
+/* ── Proportional bar chart ─────────────────── */
+.type-chart {
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+}
+
+.type-row {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+}
+
+/* Fixed-width label column so bars all start at same x */
+.type-row .ftype {
+  width: 46px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Track: full-width grey background */
+.bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--hover);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Fill: width set by Jinja, colour per type */
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width .6s cubic-bezier(.4,0,.2,1);
+}
+
+/* Colour the fill based on file type class on the parent row */
+.type-row:has(.ftype--pdf)  .bar-fill { background: #f87171; }
+.type-row:has(.ftype--docx) .bar-fill { background: #5b9cf6; }
+.type-row:has(.ftype--txt)  .bar-fill { background: #8b95a8; }
+.type-row:has(.ftype--png)  .bar-fill { background: #4ade80; }
+.type-row:has(.ftype--jpg)  .bar-fill { background: #4ade80; }
+.type-row:has(.ftype--jpeg) .bar-fill { background: #4ade80; }
+
+/* Fallback for types not listed above */
+.bar-fill { background: var(--accent); }
+
+/* Right-aligned count */
+.bar-count {
+  font-family: var(--mono);
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--txt2);
+  min-width: 20px;
+  text-align: right;
+  flex-shrink: 0;
+}
+</style>
 {% endblock %}
